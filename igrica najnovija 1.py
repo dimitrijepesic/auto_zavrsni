@@ -9,6 +9,8 @@ surface.fill(pg.Color('black'))
 pg.display.update()
 x = 640
 y = 360
+brzina = 0
+ugaona_brzina = 0
 ugao = 0
 delta_t = 0
 def ulaz(event):
