@@ -10,10 +10,10 @@ pg.display.update()
 x = 640
 y = 360
 ugao = 0
-brzina = 0
-ugaona_brzina = 0
 delta_t = 0
 def ulaz(event):
+  brzina = 0
+  ugaona_brzina = 0
   for event in pg.event.get():
         if event.type == pg.KEYDOWN:
           if event.key == pg.K_UP or event.key == pg.K_DOWN:
