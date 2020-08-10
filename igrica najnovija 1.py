@@ -46,14 +46,13 @@ sat = pg.time.Clock()
 x, y, ugao = fizika(x, y, ugao, brzina, ugaona_brzina, delta_t)
 while True:
   otkucaji = 60
-  delta_t = sat.get_time() / 1000
-  x, y, ugao = fizika(x,y,ugao, brzina, ugaona_brzina, delta_t)
-  nacrtaj_auto(x,y,ugao)
-  pg.display.update()
   sat.tick(otkucaji)
   for event in pg.event.get():
       if event.type == pg.QUIT:
           pg.quit()
       else:
         brzina, ugaona_brzina = ulaz(event)
-      pg.display.update()
+  delta_t = sat.get_time() / 1000
+  x, y, ugao = fizika(x,y,ugao, brzina, ugaona_brzina, delta_t)
+  nacrtaj_auto(x,y,ugao)
+  pg.display.update()
