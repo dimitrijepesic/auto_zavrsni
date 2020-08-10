@@ -52,7 +52,7 @@ while True:
           pg.quit()
       else:
           delta_t = sat.get_time() / 1000
-          ulaz(event)
+          brzina, ugaona_brzina = ulaz(event)
           x, y, ugao = fizika(x,y,ugao, brzina, ugaona_brzina, delta_t)
           nacrtaj_auto(x,y,ugao)
           sat.tick(otkucaji)
