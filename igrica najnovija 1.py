@@ -4,6 +4,7 @@ pg.init()
 width = 1280
 height = 720
 surface = pg.display.set_mode((width, height))
+surface_rect = surface.get_rect()
 pg.display.set_caption('igrica')
 surface.fill(pg.Color('black'))
 pg.display.update()
@@ -14,27 +15,27 @@ ugaona_brzina = 0
 ugao = 0
 delta_t = 0
 def ulaz(event):
-  brzina = 0
-  ugaona_brzina = 0
-  for event in pg.event.get():
-        if event.type == pg.KEYDOWN:
-          if event.key == pg.K_UP or event.key == pg.K_DOWN:
-            brzina = 500
-            ugaona_brzina = 0
-          elif event.key == pg.K_LEFT:
-            brzina = 0
-            ugaona_brzina = 400
-          elif event.key == pg.K_RIGHT:
-            brzina = 0
-            ugaona_brzina = -400
-        elif event.type == pg.KEYUP:
-          brzina = 0
-          ugaona_brzina = 0
+  global brzina, ugaona_brzina
+  if event.type == pg.KEYDOWN:
+    if event.key == pg.K_UP:
+      brzina = -500
+    elif event.key == pg.K_DOWN:
+      brzina = 500
+    elif event.key == pg.K_LEFT:
+      ugaona_brzina = -400
+    elif event.key == pg.K_RIGHT:
+      ugaona_brzina = 400
+  elif event.type == pg.KEYUP:
+    brzina = 0
+    ugaona_brzina = 0
   return brzina, ugaona_brzina
 def nacrtaj_auto(x, y, ugao):
+  surface.fill(pg.Color('black'))
   slika = pg.image.load('car.png')
   slika1 = pg.transform.rotate(slika, ugao)
-  surface.blit(slika1, (x,y))
+  rect = slika1.get_rect()
+  rect.center = slika1.center
+  surface.blit(slika1, rect.center)
   return
 def fizika(x, y, ugao, brzina, ugaona_brzina, delta_t):
   x_novo = x + int(brzina*delta_t*sin(ugao))
