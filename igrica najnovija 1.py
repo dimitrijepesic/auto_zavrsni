@@ -37,27 +37,20 @@ def unos(event, staro_stanje):
       novo_stanje[3]=False
   return novo_stanje
 def brzinaa(novo_stanje):
-  global brzina, ugaona_brzina
+  brzina = 0
+  ugaona_brzina = 0
   if novo_stanje[0] == True:
-    brzina = -500
-    if novo_stanje[2] == True:
-      ugaona_brzina = 400
-    elif novo_stanje[3] == True:
-      ugaona_brzina = -400
+    brzina = -100
   elif novo_stanje[1] == True:
-    brzina = 500
-    if novo_stanje[2] == True:
-      ugaona_brzina = 400
-    elif novo_stanje[3] == True:
-      ugaona_brzina = -400
+    brzina = 100
   elif novo_stanje[0]==novo_stanje[1]:
     brzina = 0
+  if novo_stanje[2] == True:
+    ugaona_brzina = 50
+  elif novo_stanje[3] == True:
+    ugaona_brzina = -50
   elif novo_stanje[2]==novo_stanje[3]:
     ugaona_brzina = 0
-  elif novo_stanje[2] == True:
-    ugaona_brzina = 400
-  elif novo_stanje[3] == True:
-    ugaona_brzina = -400
   return brzina, ugaona_brzina
 def nacrtaj_auto(x, y, ugao):
   surface.fill(pg.Color('black'))
@@ -81,9 +74,9 @@ while True:
       if event.type == pg.QUIT:
           pg.quit()
       else:
+        staro_stanje = unos(event, staro_stanje)
         brzina, ugaona_brzina = brzinaa(staro_stanje)
   delta_t = (sat.get_time() / 1000) - delta_t
-  staro_stanje = unos(event, staro_stanje)
   x, y, ugao = fizika(x,y,ugao, brzina, ugaona_brzina, delta_t)
   nacrtaj_auto(x,y,ugao)
   pg.display.update()
