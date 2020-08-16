@@ -27,7 +27,14 @@ def unos(event, staro_stanje):
     if event.key == pg.K_RIGHT:
       novo_stanje[3]=True
   elif event.type == pg.KEYUP:
-    novo_stanje = staro_stanje
+    if event.key == pg.K_UP:
+      novo_stanje[0]=False
+    if event.key == pg.K_DOWN:
+      novo_stanje[1]=False
+    if event.key == pg.K_LEFT:
+      novo_stanje[2]=False
+    if event.key == pg.K_RIGHT:
+      novo_stanje[3]=False
   return novo_stanje
 def brzinaa(novo_stanje):
   global brzina, ugaona_brzina
