@@ -1,12 +1,21 @@
 import pygame as pg
 from math import sin, cos, radians
+import sys
+import pygame.sprite as sprite
+theClock = pg.time.Clock()
 pg.init()
+background = pg.image.load('images.png')
+background_size = background.get_size()
+surface = pg.display.set_mode(background_size)
+running = True
 width = 1280
 height = 720
-surface = pg.display.set_mode((width, height))
+x1 = 0
+y1 = 0
+x2 = -width
+y2 = 0
 surface_rect = surface.get_rect()
 pg.display.set_caption('igrica')
-surface.fill(pg.Color('black'))
 pg.display.update()
 x = 640
 y = 360
@@ -40,9 +49,9 @@ def brzinaa(novo_stanje):
   brzina = 0
   ugaona_brzina = 0
   if novo_stanje[0] == True:
-    brzina = -100
+    brzina = -300
   elif novo_stanje[1] == True:
-    brzina = 100
+    brzina = 300
   elif novo_stanje[0]==novo_stanje[1]:
     brzina = 0
   if novo_stanje[2] == True:
@@ -53,7 +62,6 @@ def brzinaa(novo_stanje):
     ugaona_brzina = 0
   return brzina, ugaona_brzina
 def nacrtaj_auto(x, y, ugao):
-  surface.fill(pg.Color('black'))
   slika = pg.image.load('car.png')
   slika1 = pg.transform.rotate(slika, ugao)
   rect = slika1.get_rect(center=slika.get_rect(topleft=(x, y)).center)
@@ -76,6 +84,18 @@ while True:
       else:
         staro_stanje = unos(event, staro_stanje)
         brzina, ugaona_brzina = brzinaa(staro_stanje)
+  slikaa = pg.image.load('images.png').convert()
+  background_rect = slikaa.get_rect()
+  surface.blit(slikaa, background_rect)
+  x2+=5
+  x1+=5
+  surface.blit(slikaa,(x1,y1))
+  surface.blit(slikaa,(x2,y2))
+  if x1>width:
+    x1 = -width
+  if x2>width:
+    x2 = -width
+  theClock.tick(10)
   delta_t = (sat.get_time() / 1000) - delta_t
   x, y, ugao = fizika(x,y,ugao, brzina, ugaona_brzina, delta_t)
   nacrtaj_auto(x,y,ugao)
